@@ -9,18 +9,23 @@ public class ProdutoDTO {
 
     private Long id;
 
+
     @NotNull(message = "O preço não pode ser nulo.")
     @Positive(message = "O preço deve ser um valor positivo.")
     private Double preco;
+
+    private Long categoriaId;
 
     @NotBlank(message = "O nome não pode estar em branco.")
     private String nome;
 
     public ProdutoDTO() {}
-    public ProdutoDTO(Long id, String nome, double preco) {
+
+    public ProdutoDTO(Long id, String nome, double preco, Long categoriaId) {
         this.id = id;
         this.nome = nome;
         this.preco = preco;
+        this.categoriaId = categoriaId;
     }
     public Long getId() {return id; }
     public void setId(Long id) {this.id = id; }
@@ -28,4 +33,12 @@ public class ProdutoDTO {
     public void setNome(String nome) {this.nome = nome; }
     public double getPreco() { return preco; }
     public void setPreco(double preco) {this.preco = preco; }
+
+    public Long getCategoriaId() {
+        return categoriaId;
+    }
+    public void setCategoriaId(Long categoriaId) {
+        this.categoriaId = categoriaId;
+    }
+
 }
