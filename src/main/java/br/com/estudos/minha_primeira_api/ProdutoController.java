@@ -5,6 +5,8 @@ import br.com.estudos.minha_primeira_api.dto.ProdutoDTO;
 import br.com.estudos.minha_primeira_api.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -14,10 +16,15 @@ public class ProdutoController {
 
     @Autowired
     private ProdutoService  produtoService;
-
+    /*
     @GetMapping
     public List<ProdutoDTO> listarTodos() {
         return produtoService.listarTodos();
+    }
+    */
+    @GetMapping
+    public Page<ProdutoDTO> listarTodosPaginado(Pageable pageable){
+        return produtoService.listarPaginado(pageable);
     }
 
     @GetMapping("/{id}")

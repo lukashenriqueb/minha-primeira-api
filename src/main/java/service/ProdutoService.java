@@ -7,6 +7,8 @@ import br.com.estudos.minha_primeira_api.repository.CategoriaRepository; // Impo
 import br.com.estudos.minha_primeira_api.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,7 +20,7 @@ public class ProdutoService {
     private ProdutoRepository produtoRepository;
     @Autowired
     private CategoriaRepository categoriaRepository; // Injeção correta
-
+    /* METODO ANTIGO DE LISTAR TODOS PRODOTOS :)
     public List<ProdutoDTO> listarTodos() {
         List<Produto> produtos = produtoRepository.findAll();
         return produtos.stream()
@@ -30,6 +32,17 @@ public class ProdutoService {
                         p.getCategoria() != null ? p.getCategoria().getId() : null
                 ))
                 .collect(Collectors.toList());
+    }
+    */
+
+    public Page<ProdutoDTO> listarPaginado(Pageable pageable) {
+        Page<Produto> paginaDeProdutos = produtoRepository.findAll(pageable);
+        return paginaDeProdutos.map(produto -> new ProdutoDTO(
+                produto.getId(),
+                produto.getNome(),
+                produto.getPreco(),
+                produto.getCategoria() != null ? produto.getCategoria().getId() : null
+        ));
     }
 
     public ProdutoDTO criar(ProdutoDTO produtoDTO) {
